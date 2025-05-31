@@ -1,8 +1,7 @@
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { useEffect } from 'react';
 
-// Register ChartJS components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -13,36 +12,44 @@ ChartJS.register(
 );
 
 const PaymentChart = ({ data }) => {
-  // Process the data to group by type and currency
+  // Получаем уникальные валюты из данных
+  const getUniqueCurrencies = (data) => {
+    const currencies = new Set();
+    data.forEach(item => currencies.add(item.currency));
+    return Array.from(currencies);
+  };
+
+  // Группируем данные по категориям и валютам
   const processData = (data) => {
     const categories = {};
+    const currencies = getUniqueCurrencies(data);
     
     data.forEach(item => {
       if (!categories[item.type]) {
         categories[item.type] = {};
-      }
-      if (!categories[item.type][item.currency]) {
-        categories[item.type][item.currency] = 0;
+        // Инициализируем все валюты для каждой категории
+        currencies.forEach(currency => {
+          categories[item.type][currency] = 0;
+        });
       }
       categories[item.type][item.currency] += item.amount;
     });
     
-    return categories;
+    return { categories, currencies };
   };
 
-  const processedData = processData(data);
-  const categories = Object.keys(processedData);
-  const currencies = ['AZN', 'EUR', 'USD']; // Extract unique currencies
+  const { categories: processedData, currencies } = processData(data);
+  const categoryNames = Object.keys(processedData);
 
-  // Prepare datasets for Chart.js
+  // Создаем наборы данных для Chart.js
   const datasets = currencies.map(currency => ({
     label: currency,
-    data: categories.map(category => processedData[category][currency] || 0),
-    backgroundColor: getRandomColor(),
+    data: categoryNames.map(category => processedData[category][currency] || 0),
+    backgroundColor: getColorForCurrency(currency),
   }));
 
   const chartData = {
-    labels: categories,
+    labels: categoryNames,
     datasets: datasets,
   };
 
@@ -82,24 +89,25 @@ const PaymentChart = ({ data }) => {
   );
 };
 
-// Helper function to generate random colors
-function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+// Функция для получения цвета в зависимости от валюты
+function getColorForCurrency(currency) {
+  const currencyColors = {
+    AZN: '#3498db',
+    EUR: '#2ecc71',
+    USD: '#e74c3c',
+    GBP: '#f39c12',
+    JPY: '#9b59b6',
+    // Добавьте другие валюты по необходимости
+  };
+  
+  return currencyColors[currency] || `#${Math.floor(Math.random()*16777215).toString(16)}`;
 }
 
 // Sample usage with your data
-const MyChart = () => {
-  // useEffect(() => {
-    
-  // });
-  // const paymentData = axios.get(`http://loccalhost:5000/api/payment/getpaymentbyuserid/${}`)
+const MyChart = (payments) => {
+  console.log(payments.children);
 
-  // return <PaymentChart data={paymentData} />;
+  return <PaymentChart data={payments.children} />;
 };
 
 export default MyChart;
