@@ -7,12 +7,15 @@ using SmartWalletWebApi.Service.Base;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+builder.Services.AddScoped<IincomeRepository, IncomeRepository>();
+builder.Services.AddScoped<IincomeService, IncomeService>();
+
 builder.Services.AddControllers();
 builder.Services.AddHttpClient<OpenRouterService>();
 
@@ -25,17 +28,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("FinancialAssistantPolicy", policyBuilder =>
-    {
-        policyBuilder
-            .AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
+    options.AddPolicy(
+        "FinancialAssistantPolicy",
+        policyBuilder =>
+        {
+            policyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        }
+    );
 });
 
 var app = builder.Build();
-
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -47,5 +49,3 @@ app.UseHttpsRedirection();
 app.UseCors("FinancialAssistantPolicy");
 
 app.Run();
-
-

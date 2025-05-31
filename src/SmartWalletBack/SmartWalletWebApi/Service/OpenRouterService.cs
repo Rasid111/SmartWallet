@@ -12,13 +12,17 @@ namespace SmartWalletWebApi.Service;
 public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
-    private const string ApiKey = "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";
+
+  private const string ApiKey =
+        "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";
+
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
 
     public OpenRouterService(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiKey);
+
     }
 
     public async Task<string> SendMessage(string message)
@@ -45,15 +49,8 @@ public class OpenRouterService
             throw new Exception($"Exception API OpenRouter: {response.StatusCode} | {result}");
         }
 
-        
+
         var data = JsonSerializer.Deserialize<OpenRouterResponse>(result);
 
         return data?.Choices?.FirstOrDefault()?.Message?.Content ?? "Нет ответа от AI.";
     }
-
-    
-
-    
-
- 
-}

@@ -16,21 +16,30 @@ public class PaymentService : IPaymentService
 
     public PaymentService(IPaymentRepository paymentRepository)
     {
-        this.paymentRepository = paymentRepository ?? throw new ArgumentNullException(nameof(paymentRepository), "PaymentRepository cannot be null in PaymentService constructor.");
+        this.paymentRepository =
+            paymentRepository
+            ?? throw new ArgumentNullException(
+                nameof(paymentRepository),
+                "PaymentRepository cannot be null in PaymentService constructor."
+            );
     }
 
     public async Task AddPayment(AddPaymentRequestDto payment)
     {
         if (payment == null)
         {
-            throw new ArgumentNullException(nameof(payment), "Payment object is null in AddPayment method.");
+            throw new ArgumentNullException(
+                nameof(payment),
+                "Payment object is null in AddPayment method."
+            );
         }
 
         if (payment.Amount <= 0)
         {
-            throw new ArgumentException("Payment amount must be greater than zero in AddPayment method.");
+            throw new ArgumentException(
+                "Payment amount must be greater than zero in AddPayment method."
+            );
         }
-
 
         try
         {
@@ -55,7 +64,9 @@ public class PaymentService : IPaymentService
             var payments = await paymentRepository.AllPaymentsAsync();
             if (payments == null)
             {
-                throw new Exception("PaymentRepository returned null in AllPaymentsAsync. Expected a collection of payments.");
+                throw new Exception(
+                    "PaymentRepository returned null in AllPaymentsAsync. Expected a collection of payments."
+                );
             }
 
             var result = payments.Select(payment => new GetPaymentResponseDto
@@ -65,6 +76,7 @@ public class PaymentService : IPaymentService
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
+
                 Currency = payment.Currency
             });
 
@@ -80,7 +92,9 @@ public class PaymentService : IPaymentService
     {
         if (id <= 0)
         {
-            throw new ArgumentException("Invalid payment ID in GetPaymentById. ID must be greater than zero.");
+            throw new ArgumentException(
+                "Invalid payment ID in GetPaymentById. ID must be greater than zero."
+            );
         }
 
         try
@@ -98,12 +112,17 @@ public class PaymentService : IPaymentService
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
+
                 Currency = payment.Currency
+
             };
         }
         catch (Exception ex)
         {
-            throw new Exception($"An error occurred while fetching payment by ID {id}: {ex.Message}", ex);
+            throw new Exception(
+                $"An error occurred while fetching payment by ID {id}: {ex.Message}",
+                ex
+            );
         }
     }
 
@@ -111,7 +130,9 @@ public class PaymentService : IPaymentService
     {
         if (id <= 0)
         {
-            throw new ArgumentException("Invalid payment ID in GetPaymentByUserId. ID must be greater than zero.");
+            throw new ArgumentException(
+                "Invalid payment ID in GetPaymentByUserId. ID must be greater than zero."
+            );
         }
 
         try
@@ -129,14 +150,19 @@ public class PaymentService : IPaymentService
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
+
                 Currency = payment.Currency
+
             });
 
             return result;
         }
         catch (Exception ex)
         {
-            throw new Exception($"An error occurred while fetching payment by ID {id}: {ex.Message}", ex);
+            throw new Exception(
+                $"An error occurred while fetching payment by ID {id}: {ex.Message}",
+                ex
+            );
         }
     }
 }
