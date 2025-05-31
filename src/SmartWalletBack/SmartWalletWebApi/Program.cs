@@ -25,6 +25,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString);
 });
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
