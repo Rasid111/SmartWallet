@@ -46,7 +46,7 @@ public class PaymentService : IPaymentService
             await paymentRepository.AddPayment(
                 new Payment
                 {
-                    Amount = payment.Amount,
+                    TotalAmount = payment.Amount,
                     Type = Enum.TryParse<PaymentType>(payment.Type, true, out var type)
                         ? type
                         : PaymentType.Other,
@@ -76,7 +76,7 @@ public class PaymentService : IPaymentService
             var result = payments.Select(payment => new GetPaymentResponseDto
             {
                 Id = payment.Id,
-                Amount = payment.Amount,
+                Amount = payment.TotalAmount,
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
@@ -111,7 +111,7 @@ public class PaymentService : IPaymentService
             return new GetPaymentResponseDto
             {
                 Id = payment.Id,
-                Amount = payment.Amount,
+                Amount = payment.TotalAmount,
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
@@ -147,7 +147,7 @@ public class PaymentService : IPaymentService
             var result = payment.Select(payment => new GetPaymentResponseDto
             {
                 Id = payment.Id,
-                Amount = payment.Amount,
+                Amount = payment.TotalAmount,
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
