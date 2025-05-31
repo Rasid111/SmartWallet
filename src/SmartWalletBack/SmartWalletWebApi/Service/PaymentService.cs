@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartWalletWebApi.Dtos.Payment;
+using SmartWalletWebApi.Enums;
 using SmartWalletWebApi.Models;
 using SmartWalletWebApi.Repositories.Base;
 using SmartWalletWebApi.Service.Base;
@@ -17,7 +19,7 @@ public class PaymentService : IPaymentService
         this.paymentRepository = paymentRepository ?? throw new ArgumentNullException(nameof(paymentRepository), "PaymentRepository cannot be null in PaymentService constructor.");
     }
 
-    public async Task AddPayment(Payment payment)
+    public async Task AddPayment(AddPaymentRequestDto payment)
     {
         if (payment == null)
         {
@@ -32,7 +34,13 @@ public class PaymentService : IPaymentService
 
         try
         {
-            await paymentRepository.AddPayment(payment);
+            await paymentRepository.AddPayment(new Payment
+            {
+                Amount = payment.Amount,
+                Type = Enum.TryParse<PaymentType>(payment.Type, true, out var type) ? type : PaymentType.Other,
+                UserId = payment.UserId,
+                Currency = payment.Currency
+            });
         }
         catch (Exception ex)
         {
@@ -40,7 +48,7 @@ public class PaymentService : IPaymentService
         }
     }
 
-    public async Task<IEnumerable<Payment>> AllPaymentsAsync()
+    public async Task<IEnumerable<GetPaymentResponseDto>> AllPaymentsAsync()
     {
         try
         {
@@ -50,7 +58,17 @@ public class PaymentService : IPaymentService
                 throw new Exception("PaymentRepository returned null in AllPaymentsAsync. Expected a collection of payments.");
             }
 
-            return payments;
+            var result = payments.Select(payment => new GetPaymentResponseDto
+            {
+                Id = payment.Id,
+                Amount = payment.Amount,
+                PaymentDate = payment.PaymentDate,
+                Type = payment.Type.ToString(),
+                UserId = payment.UserId,
+                Currency = payment.Currency
+            });
+
+            return result;
         }
         catch (Exception ex)
         {
@@ -58,7 +76,7 @@ public class PaymentService : IPaymentService
         }
     }
 
-    public async Task<Payment?> GetPaymentById(int id)
+    public async Task<GetPaymentResponseDto?> GetPaymentById(int id)
     {
         if (id <= 0)
         {
@@ -73,7 +91,15 @@ public class PaymentService : IPaymentService
                 throw new Exception($"No payment found with ID {id} in GetPaymentById.");
             }
 
-            return payment;
+            return new GetPaymentResponseDto
+            {
+                Id = payment.Id,
+                Amount = payment.Amount,
+                PaymentDate = payment.PaymentDate,
+                Type = payment.Type.ToString(),
+                UserId = payment.UserId,
+                Currency = payment.Currency
+            };
         }
         catch (Exception ex)
         {
@@ -81,7 +107,7 @@ public class PaymentService : IPaymentService
         }
     }
 
-    public async Task<IEnumerable<Payment?>> GetPaymentByUserId(int id)
+    public async Task<IEnumerable<GetPaymentResponseDto>> GetPaymentByUserId(int id)
     {
         if (id <= 0)
         {
@@ -96,7 +122,17 @@ public class PaymentService : IPaymentService
                 throw new Exception($"No payment found with ID {id} in GetPaymentByUserId.");
             }
 
-            return payment;
+            var result = payment.Select(payment => new GetPaymentResponseDto
+            {
+                Id = payment.Id,
+                Amount = payment.Amount,
+                PaymentDate = payment.PaymentDate,
+                Type = payment.Type.ToString(),
+                UserId = payment.UserId,
+                Currency = payment.Currency
+            });
+
+            return result;
         }
         catch (Exception ex)
         {

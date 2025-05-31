@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SmartWalletWebApi.Dtos.Payment;
 using SmartWalletWebApi.Models;
 using SmartWalletWebApi.Service;
 using SmartWalletWebApi.Service.Base;
@@ -60,7 +61,7 @@ public class PaymentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePayment([FromBody] Payment payment)
+    public async Task<IActionResult> CreatePayment([FromBody] AddPaymentRequestDto payment)
     {
         if (payment == null)
         {
@@ -70,7 +71,7 @@ public class PaymentController : ControllerBase
         try
         {
             await paymentService.AddPayment(payment);
-            return CreatedAtAction(nameof(GetPaymentById), new { id = payment.Id }, payment);
+            return NoContent();
         }
         catch (ArgumentException ex)
         {
