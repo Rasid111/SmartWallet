@@ -48,7 +48,10 @@ public class PaymentService : IPaymentService
                 Amount = payment.Amount,
                 Type = Enum.TryParse<PaymentType>(payment.Type, true, out var type) ? type : PaymentType.Other,
                 UserId = payment.UserId,
-                Currency = payment.Currency
+                Currency = payment.Currency,
+                Products = payment.Products,
+                SallerName=payment.SallerName
+                
             });
         }
         catch (Exception ex)

@@ -13,8 +13,9 @@ public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
 
-    private const string ApiKey =
-          "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";
+
+    private const string ApiKey ="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";
+
 
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
 
