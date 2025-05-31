@@ -19,6 +19,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseNpgsql(connectionString);
 });
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FinancialAssistantPolicy", policyBuilder =>
+    {
+        policyBuilder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 
@@ -29,6 +42,7 @@ app.MapControllers();
 
 app.UseHttpsRedirection();
 
+app.UseCors("FinancialAssistantPolicy");
 
 app.Run();
 
