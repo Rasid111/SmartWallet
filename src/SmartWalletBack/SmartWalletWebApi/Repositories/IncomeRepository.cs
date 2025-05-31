@@ -9,7 +9,7 @@ using SmartWalletWebApi.Repositories.Base;
 
 namespace SmartWalletWebApi.Repositories;
 
-public class IncomeRepository : IincomeRepository
+public class IncomeRepository : IIncomeRepository
 {
     private AppDbContext context;
 

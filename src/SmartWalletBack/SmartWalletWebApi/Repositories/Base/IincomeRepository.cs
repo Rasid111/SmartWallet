@@ -1,4 +1,5 @@
-public interface IincomeRepository
+namespace SmartWalletWebApi.Repositories.Base;
+public interface IIncomeRepository
 {
     Task<IEnumerable<Income>> AllIncomesAsync();
     public Task<IEnumerable<Income>> GetByUserId(int userId);

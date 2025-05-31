@@ -13,8 +13,8 @@ public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
 
-  private const string ApiKey =
-        "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";
+    private const string ApiKey =
+          "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";
 
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
 
@@ -29,7 +29,7 @@ public class OpenRouterService
     {
         var requestBody = new
         {
-            model = "anthropic/claude-3-haiku", 
+            model = "anthropic/claude-3-haiku",
             messages = new[]
             {
                 new { role = "user", content = message }
@@ -54,3 +54,4 @@ public class OpenRouterService
 
         return data?.Choices?.FirstOrDefault()?.Message?.Content ?? "Нет ответа от AI.";
     }
+}
