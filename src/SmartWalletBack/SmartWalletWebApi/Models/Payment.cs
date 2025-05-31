@@ -20,7 +20,4 @@ public class Payment
     public IEnumerable<Product> Products { get; set; }
     public int UserId { get; set; }
     public required string Currency { get; set; }
-
-
 }
-

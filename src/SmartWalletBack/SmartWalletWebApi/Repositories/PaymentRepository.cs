@@ -22,25 +22,21 @@ public class PaymentRepository : IPaymentRepository
     {
         await context.Payments.AddAsync(payment);
         await context.SaveChangesAsync();
-        
     }
-
 
     public async Task<IEnumerable<Payment>> AllPaymentsAsync()
     {
         var payments = await context.Payments.ToListAsync();
-        return payments;   
+        return payments;
     }
 
     public async Task<IEnumerable<Payment>> GetPaymentByUserId(int id)
     {
-        return  context.Payments.Where(f => f.UserId == id).ToList();
+        return context.Payments.Where(f => f.UserId == id).ToList();
     }
 
-    public async  Task<Payment?> GetPaymentById(int id)
+    public async Task<Payment?> GetPaymentById(int id)
     {
         return await context.Payments.FirstOrDefaultAsync(f => f.Id == id);
     }
-
-   
 }

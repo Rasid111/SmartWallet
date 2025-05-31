@@ -18,6 +18,7 @@ builder.Services.AddScoped<IIncomeService, IncomeService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHttpClient<OpenRouterService>();
+builder.Services.AddScoped<AiAnalysisService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

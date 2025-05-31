@@ -43,16 +43,19 @@ public class PaymentService : IPaymentService
 
         try
         {
-            await paymentRepository.AddPayment(new Payment
-            {
-                Amount = payment.Amount,
-                Type = Enum.TryParse<PaymentType>(payment.Type, true, out var type) ? type : PaymentType.Other,
-                UserId = payment.UserId,
-                Currency = payment.Currency,
-                Products = payment.Products,
-                SallerName=payment.SallerName
-                
-            });
+            await paymentRepository.AddPayment(
+                new Payment
+                {
+                    Amount = payment.Amount,
+                    Type = Enum.TryParse<PaymentType>(payment.Type, true, out var type)
+                        ? type
+                        : PaymentType.Other,
+                    UserId = payment.UserId,
+                    Currency = payment.Currency,
+                    Products = payment.Products,
+                    SallerName = payment.SallerName,
+                }
+            );
         }
         catch (Exception ex)
         {
@@ -80,7 +83,7 @@ public class PaymentService : IPaymentService
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
 
-                Currency = payment.Currency
+                Currency = payment.Currency,
             });
 
             return result;
@@ -116,8 +119,7 @@ public class PaymentService : IPaymentService
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
 
-                Currency = payment.Currency
-
+                Currency = payment.Currency,
             };
         }
         catch (Exception ex)
@@ -154,8 +156,7 @@ public class PaymentService : IPaymentService
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
 
-                Currency = payment.Currency
-
+                Currency = payment.Currency,
             });
 
             return result;

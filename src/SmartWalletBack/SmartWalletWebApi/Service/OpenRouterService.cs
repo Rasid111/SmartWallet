@@ -12,11 +12,8 @@ namespace SmartWalletWebApi.Service;
 public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
-
-
-    private const string ApiKey ="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";
-
-
+    private const string ApiKey =
+        "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";
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
 
     public OpenRouterService(HttpClient httpClient)
@@ -31,12 +28,9 @@ public class OpenRouterService
         var requestBody = new
         {
             model = "anthropic/claude-3-haiku",
-            messages = new[]
-            {
-                new { role = "user", content = message }
-            },
-            max_tokens = 100,
-            temperature = 0.7
+            messages = new[] { new { role = "user", content = message } },
+            max_tokens = 300,
+            temperature = 0.7,
         };
 
         var json = JsonSerializer.Serialize(requestBody);
