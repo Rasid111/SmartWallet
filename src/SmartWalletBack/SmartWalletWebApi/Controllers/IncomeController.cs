@@ -3,14 +3,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using SmartWalletWebApi.Dtos.Income;
+using SmartWalletWebApi.Migrations;
+using SmartWalletWebApi.Service.Base;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class IncomeController : ControllerBase
 {
-    IincomeService incomeService;
+    IIncomeService incomeService;
 
-    public IncomeController(IincomeService incomeService)
+    public IncomeController(IIncomeService incomeService)
     {
         this.incomeService = incomeService;
     }
@@ -54,7 +57,7 @@ public class IncomeController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateIncome([FromBody] IncomeDto dto)
+    public async Task<IActionResult> CreateIncome([FromBody] AddIncomeRequestDto dto)
     {
         if (dto == null)
         {
