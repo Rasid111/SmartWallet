@@ -13,8 +13,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
-builder.Services.AddScoped<IincomeRepository, IncomeRepository>();
-builder.Services.AddScoped<IincomeService, IncomeService>();
+builder.Services.AddScoped<IIncomeRepository, IncomeRepository>();
+builder.Services.AddScoped<IIncomeService, IncomeService>();
 
 builder.Services.AddControllers();
 builder.Services.AddHttpClient<OpenRouterService>();

@@ -4,12 +4,12 @@ using SmartWalletWebApi.Service.Base;
 
 public class AiAnalysisService
 {
-    private readonly IincomeService incomeService;
+    private readonly IIncomeService incomeService;
     private readonly IPaymentService paymentService;
     private readonly OpenRouterService openRouter;
 
     public AiAnalysisService(
-        IincomeService incomeService,
+        IIncomeService incomeService,
         IPaymentService paymentService,
         OpenRouterService openRouter
     )

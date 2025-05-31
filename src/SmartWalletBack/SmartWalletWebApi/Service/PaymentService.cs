@@ -46,12 +46,14 @@ public class PaymentService : IPaymentService
             await paymentRepository.AddPayment(
                 new Payment
                 {
-                    TotalAmount = payment.Amount,
+                    Amount = payment.Amount,
                     Type = Enum.TryParse<PaymentType>(payment.Type, true, out var type)
                         ? type
                         : PaymentType.Other,
                     UserId = payment.UserId,
                     Currency = payment.Currency,
+                    Products = payment.Products,
+                    SallerName = payment.SallerName,
                 }
             );
         }
@@ -76,10 +78,11 @@ public class PaymentService : IPaymentService
             var result = payments.Select(payment => new GetPaymentResponseDto
             {
                 Id = payment.Id,
-                Amount = payment.TotalAmount,
+                Amount = payment.Amount,
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
+
                 Currency = payment.Currency,
             });
 
@@ -111,10 +114,11 @@ public class PaymentService : IPaymentService
             return new GetPaymentResponseDto
             {
                 Id = payment.Id,
-                Amount = payment.TotalAmount,
+                Amount = payment.Amount,
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
+
                 Currency = payment.Currency,
             };
         }
@@ -147,10 +151,11 @@ public class PaymentService : IPaymentService
             var result = payment.Select(payment => new GetPaymentResponseDto
             {
                 Id = payment.Id,
-                Amount = payment.TotalAmount,
+                Amount = payment.Amount,
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
+
                 Currency = payment.Currency,
             });
 

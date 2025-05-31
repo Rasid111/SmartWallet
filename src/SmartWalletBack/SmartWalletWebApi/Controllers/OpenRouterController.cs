@@ -21,7 +21,6 @@ public class OpenRouterController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SendMessage(string message)
     {
-        
         var response = await openRouterService.SendMessage(message);
         return Ok(response);
     }
