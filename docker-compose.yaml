@@ -1,0 +1,46 @@
+# services:
+#   postgres:
+#     image: postgres:latest
+#     container_name: postgres_container
+#     environment:
+#       POSTGRES_USER: sa
+#       POSTGRES_PASSWORD: Secret123!
+#       POSTGRES_DB: SmartWalletDb
+#       expose: 
+#         - "5432"
+#       ports: 
+#         - "5432:5432"
+#     volumes: 
+#       -postgres_volume:/var/lib/postgresql/data,
+#     networks: 
+#       -smartwallet_network
+
+# volumes:
+#   postgres_volume:
+# networks:
+#   smartwallet_network:
+#     driver: bridge
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: Secret123!
+      POSTGRES_DB: SmartWalletDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    networks:
+      - smartwallet_network
+
+volumes:
+  postgres_volume:
+
+networks:
+  smartwallet_network:
+    driver: bridge
