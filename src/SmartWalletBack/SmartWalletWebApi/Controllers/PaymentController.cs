@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SmartWalletWebApi.Dtos.Payment;
 using SmartWalletWebApi.Models;
+using SmartWalletWebApi.Service;
 using SmartWalletWebApi.Service.Base;
 
 namespace SmartWalletWebApi.Controllers;
@@ -13,10 +15,12 @@ namespace SmartWalletWebApi.Controllers;
 public class PaymentController : ControllerBase
 {
     private readonly IPaymentService paymentService;
+    private readonly OpenRouterService serviceAi;
 
-    public PaymentController(IPaymentService paymentService)
+    public PaymentController(IPaymentService paymentService, OpenRouterService serviceAi)
     {
         this.paymentService = paymentService;
+        this.serviceAi = serviceAi;
     }
     [HttpGet]
     public async Task<IActionResult> GetAllPayments()
@@ -57,7 +61,7 @@ public class PaymentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePayment([FromBody] Payment payment)
+    public async Task<IActionResult> CreatePayment([FromBody] AddPaymentRequestDto payment)
     {
         if (payment == null)
         {
@@ -67,7 +71,7 @@ public class PaymentController : ControllerBase
         try
         {
             await paymentService.AddPayment(payment);
-            return CreatedAtAction(nameof(GetPaymentById), new { id = payment.Id }, payment);
+            return NoContent();
         }
         catch (ArgumentException ex)
         {
@@ -102,4 +106,5 @@ public class PaymentController : ControllerBase
             return StatusCode(500, $"An error occurred while fetching payment by ID: {ex.Message}");
         }
     }
+
 }

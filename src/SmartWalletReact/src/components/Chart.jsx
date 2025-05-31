@@ -1,5 +1,6 @@
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { useEffect } from 'react';
 
 // Register ChartJS components
 ChartJS.register(
@@ -93,42 +94,12 @@ function getRandomColor() {
 
 // Sample usage with your data
 const MyChart = () => {
-  const paymentData = [
-    {
-      "id": 1,
-      "amount": 20,
-      "paymentDate": "2025-05-31T15:53:28.848Z",
-      "type": "Grocery",
-      "userId": 1,
-      "currency": "AZN"
-    },
-    {
-      "id": 2,
-      "amount": 10,
-      "paymentDate": "2025-05-31T16:08:55.198Z",
-      "type": "Transport",
-      "userId": 1,
-      "currency": "AZN"
-    },
-    {
-      "id": 3,
-      "amount": 30,
-      "paymentDate": "2025-05-31T16:09:36.362Z",
-      "type": "Transport",
-      "userId": 1,
-      "currency": "EUR"
-    },
-    {
-      "id": 4,
-      "amount": 40,
-      "paymentDate": "2025-05-31T16:10:04.569Z",
-      "type": "Entertainment",
-      "userId": 1,
-      "currency": "USD"
-    }
-  ];
+  // useEffect(() => {
+    
+  // });
+  // const paymentData = axios.get(`http://loccalhost:5000/api/payment/getpaymentbyuserid/${}`)
 
-  return <PaymentChart data={paymentData} />;
+  // return <PaymentChart data={paymentData} />;
 };
 
 export default MyChart;
