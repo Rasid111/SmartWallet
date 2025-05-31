@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "amount": 20,
+    "paymentDate": "2025-05-31T15:53:28.848Z",
+    "type": 0,
+    "userId": 1,
+    "currency": ""
+  },
+  {
+    "id": 2,
+    "amount": 10,
+    "paymentDate": "2025-05-31T16:08:55.198Z",
+    "type": 2,
+    "userId": 1,
+    "currency": "Azn"
+  },
+  {
+    "id": 3,
+    "amount": 30,
+    "paymentDate": "2025-05-31T16:09:36.362Z",
+    "type": 2,
+    "userId": 1,
+    "currency": "EUR"
+  },
+  {
+    "id": 4,
+    "amount": 40,
+    "paymentDate": "2025-05-31T16:10:04.569Z",
+    "type": 3,
+    "userId": 1,
+    "currency": "USD"
+  }
+]

@@ -10,9 +10,8 @@ namespace SmartWalletWebApi.DB;
 public class AppDbContext : DbContext
 {
     public DbSet<Payment> Payments { get; set; }
-   
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
-  
+    public DbSet<Income> Incomes { get; set; }
+
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options) { }
 }

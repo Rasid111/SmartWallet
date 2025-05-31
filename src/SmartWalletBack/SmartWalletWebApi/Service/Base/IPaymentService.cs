@@ -12,6 +12,4 @@ public interface IPaymentService
     Task<Payment?> GetPaymentById(int id);
     Task AddPayment(Payment payment);
     Task<IEnumerable<Payment>> GetPaymentByUserId(int id);
-
-
 }
