@@ -4,16 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SmartWalletWebApi.DB;
+using SmartWalletWebApi.Dtos.Income;
 using SmartWalletWebApi.Models;
 using SmartWalletWebApi.Repositories.Base;
+using SmartWalletWebApi.Service.Base;
 
 namespace SmartWalletWebApi.Repositories;
 
-public class IncomeService : IincomeService
+public class IncomeService : IIncomeService
 {
-    IincomeRepository incomeRepository;
+    IIncomeRepository incomeRepository;
 
-    public IncomeService(IincomeRepository incomeRepository)
+    public IncomeService(IIncomeRepository incomeRepository)
     {
         this.incomeRepository =
             incomeRepository
@@ -23,7 +25,7 @@ public class IncomeService : IincomeService
             );
     }
 
-    public async Task<int> AddIncome(IncomeDto dto)
+    public async Task<int> AddIncome(AddIncomeRequestDto dto)
     {
         if (dto == null)
         {
@@ -45,9 +47,10 @@ public class IncomeService : IincomeService
             var income = new Income
             {
                 Amount = dto.Amount,
-                Type = dto.Type,
+                Type = Enum.TryParse<IncomeType>(dto.Type, true, out var type) ? type : IncomeType.Other,
                 UserId = dto.UserId,
                 DateReceived = DateTime.UtcNow,
+                Currency = dto.Currency
             };
 
             int id = await incomeRepository.AddIncome(income);
