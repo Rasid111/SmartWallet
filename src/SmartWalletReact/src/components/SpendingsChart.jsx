@@ -93,7 +93,7 @@ const PaymentChart = ({ data }) => {
 
   return (
     <>
-      <h2>Payment Chart</h2>
+      <h2 className="text-center">Payment Chart</h2>
       <Bar data={chartData} options={options} />
     </>
   );
