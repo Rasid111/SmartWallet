@@ -11,7 +11,7 @@ public class AiAnalysisController : ControllerBase
         this.aiService = aiService;
     }
 
-    [HttpGet("{userId}")]
+    [HttpGet("statistics/{userId}")]
     public async Task<IActionResult> Analyze(int userId)
     {
         try
@@ -24,4 +24,19 @@ public class AiAnalysisController : ControllerBase
             return StatusCode(500, $"Ошибка анализа: {ex.Message}");
         }
     }
+
+    [HttpGet("investments/{userId}")]
+    public async Task<IActionResult> AnalyzeInvest(int userId)
+    {
+        try
+        {
+            var result = await aiService.AnalyzeUserFinanceAsyncInvest(userId);
+            return Ok(new { advice = result });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Ошибка анализа: {ex.Message}");
+        }
+    }
+
 }
