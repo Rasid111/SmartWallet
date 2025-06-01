@@ -14,5 +14,5 @@ public interface IPaymentService
     Task AddPayment(AddPaymentRequestDto payment);
     Task<IEnumerable<GetPaymentResponseDto>> GetPaymentByUserId(int id);
 
-
+    public void BulkAdd(List<AddPaymentRequestDto> dtos);
 }

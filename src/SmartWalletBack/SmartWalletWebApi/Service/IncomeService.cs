@@ -47,10 +47,12 @@ public class IncomeService : IIncomeService
             var income = new Income
             {
                 Amount = dto.Amount,
-                Type = Enum.TryParse<IncomeType>(dto.Type, true, out var type) ? type : IncomeType.Other,
+                Type = Enum.TryParse<IncomeType>(dto.Type, true, out var type)
+                    ? type
+                    : IncomeType.Other,
                 UserId = dto.UserId,
                 DateReceived = DateTime.UtcNow,
-                Currency = dto.Currency
+                Currency = dto.Currency,
             };
 
             int id = await incomeRepository.AddIncome(income);
@@ -62,7 +64,6 @@ public class IncomeService : IIncomeService
         }
     }
 
-
     public async Task<IEnumerable<GetIncomeResponseDto>> AllIncomesAsync()
     {
         return (await incomeRepository.AllIncomesAsync()).Select(income => new GetIncomeResponseDto
@@ -72,7 +73,7 @@ public class IncomeService : IIncomeService
             Type = income.Type.ToString(),
             UserId = income.UserId,
             DateReceived = income.DateReceived,
-            Currency = income.Currency
+            Currency = income.Currency,
         });
     }
 
@@ -85,21 +86,40 @@ public class IncomeService : IIncomeService
             Type = income.Type.ToString(),
             UserId = income.UserId,
             DateReceived = income.DateReceived,
-            Currency = income.Currency
-        });;
+            Currency = income.Currency,
+        });
+        ;
     }
 
     public async Task<GetIncomeResponseDto?> GetByid(int id)
     {
         var res = await incomeRepository.GetByid(id);
-        return res == null ? null : new GetIncomeResponseDto
-        {
-            Id = res.Id,
-            Amount = res.Amount,
-            Type = res.Type.ToString(),
-            UserId = res.UserId,
-            DateReceived = res.DateReceived,
-            Currency = res.Currency
-        };
+        return res == null
+            ? null
+            : new GetIncomeResponseDto
+            {
+                Id = res.Id,
+                Amount = res.Amount,
+                Type = res.Type.ToString(),
+                UserId = res.UserId,
+                DateReceived = res.DateReceived,
+                Currency = res.Currency,
+            };
+    }
+
+    public void BulkAdd(List<AddIncomeRequestDto> dtos)
+    {
+        incomeRepository.BulkCreate(
+            dtos.Select(i => new Income
+                {
+                    Amount = i.Amount,
+                    Type = Enum.TryParse<IncomeType>(i.Type, true, out var type)
+                        ? type
+                        : IncomeType.Other,
+                    Currency = i.Currency,
+                    UserId = i.UserId,
+                })
+                .ToList()
+        );
     }
 }

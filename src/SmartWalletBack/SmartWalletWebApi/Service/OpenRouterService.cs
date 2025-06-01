@@ -19,8 +19,10 @@ public class OpenRouterService
     public OpenRouterService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiKey);
-
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            ApiKey
+        );
     }
 
     public async Task<string> SendMessage(string message)
@@ -43,7 +45,6 @@ public class OpenRouterService
         {
             throw new Exception($"Exception API OpenRouter: {response.StatusCode} | {result}");
         }
-
 
         var data = JsonSerializer.Deserialize<OpenRouterResponse>(result);
 
