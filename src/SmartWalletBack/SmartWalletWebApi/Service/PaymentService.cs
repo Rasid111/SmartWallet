@@ -52,6 +52,7 @@ public class PaymentService : IPaymentService
                         : PaymentType.Other,
                     UserId = payment.UserId,
                     Currency = payment.Currency,
+
                     Products = payment
                         .Products.Select(p => new Product
                         {
@@ -61,8 +62,10 @@ public class PaymentService : IPaymentService
                         })
                         .ToList(),
                     SallerName = payment.SallerName,
+
                 }
             );
+
         }
         catch (Exception ex)
         {
