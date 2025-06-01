@@ -52,13 +52,14 @@ public class PaymentService : IPaymentService
                         : PaymentType.Other,
                     UserId = payment.UserId,
                     Currency = payment.Currency,
-                    Products = payment.Products.Select(p=>new Product
-                    {
-                        Name = p.Name,
+                    Products = payment
+                        .Products.Select(p => new Product
+                        {
+                            Name = p.Name,
 
-                        Price = p.Price,
-                        
-                    } ).ToList(),
+                            Price = p.Price,
+                        })
+                        .ToList(),
                     SallerName = payment.SallerName,
                 }
             );
@@ -90,14 +91,15 @@ public class PaymentService : IPaymentService
                 UserId = payment.UserId,
                 Currency = payment.Currency,
                 SallerName = payment.SallerName,
-                Products = payment.Products.Select(p => new Models.Product
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price
-                }).ToList()
+                Products = payment
+                    .Products.Select(p => new Models.Product
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Price = p.Price,
+                    })
+                    .ToList(),
             });
-
 
             return result;
         }
@@ -181,5 +183,25 @@ public class PaymentService : IPaymentService
                 ex
             );
         }
+    }
+
+    public void BulkAdd(List<AddPaymentRequestDto> dtos)
+    {
+        paymentRepository.BulkCreate(
+            dtos.Select(p => new Payment
+                {
+                    Amount = p.Amount,
+                    Type = Enum.TryParse<PaymentType>(p.Type, true, out var type)
+                        ? type
+                        : PaymentType.Other,
+                    SallerName = p.SallerName,
+                    Products = p
+                        .Products.Select(p => new Product { Name = p.Name, Price = p.Price })
+                        .ToList(),
+                    UserId = p.UserId,
+                    Currency = p.Currency,
+                })
+                .ToList()
+        );
     }
 }

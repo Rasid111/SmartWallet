@@ -102,4 +102,17 @@ public class AiAnalysisService
 
         return await openRouter.SendMessage(message);
     }
+
+    public async Task<string> AnalyzeUserFinanceAsyncBestChoice(int userId)
+    {
+        var allPayments = await paymentService.AllPaymentsAsync();
+
+        var userPayments = await paymentService.GetPaymentByUserId(userId);
+
+        var message =
+            $@"
+вот мои покупки {JsonSerializer.Serialize(userPayments)}, а вот покупки всех клиентов {JsonSerializer.Serialize(allPayments)}, и у какого SellerName самые низкие цены на продукты, которые я покупаю.
+";
+        return await openRouter.SendMessage(message);
+    }
 }
