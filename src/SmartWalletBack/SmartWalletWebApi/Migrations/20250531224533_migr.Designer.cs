@@ -12,8 +12,8 @@ using SmartWalletWebApi.DB;
 namespace SmartWalletWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250531210819_add currency to income")]
-    partial class addcurrencytoincome
+    [Migration("20250531224533_migr")]
+    partial class migr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,9 @@ namespace SmartWalletWebApi.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("SallerName")
+                        .HasColumnType("text");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -81,6 +84,43 @@ namespace SmartWalletWebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("SmartWalletWebApi.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("PaymentId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("SmartWalletWebApi.Models.Product", b =>
+                {
+                    b.HasOne("SmartWalletWebApi.Models.Payment", null)
+                        .WithMany("Products")
+                        .HasForeignKey("PaymentId");
+                });
+
+            modelBuilder.Entity("SmartWalletWebApi.Models.Payment", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -87,7 +87,7 @@ const QRScanner = () => {
 
     try {
       const response = await axios.post(
-        "https://ваш-api-адрес/endpoint",
+        "http://localhost:5000/api/Payment/CreatePayment",
         data,
         {
           headers: {

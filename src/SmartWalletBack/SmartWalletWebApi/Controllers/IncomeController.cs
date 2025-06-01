@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using SmartWalletWebApi.Dtos.Income;
-using SmartWalletWebApi.Migrations;
+
 using SmartWalletWebApi.Service.Base;
 
 [Route("api/[controller]/[action]")]

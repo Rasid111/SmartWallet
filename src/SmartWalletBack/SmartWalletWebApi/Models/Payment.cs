@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using SmartWalletWebApi.Enums;
@@ -17,7 +18,9 @@ public class Payment
 
     public PaymentType Type { get; set; }
     
-    public IEnumerable<Product> Products { get; set; }
+    // public IEnumerable<Product> Products { get; set; }
+    public ICollection<Product> Products { get; set; } = new List<Product>();
+
     public int UserId { get; set; }
     public required string Currency { get; set; }
 }

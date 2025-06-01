@@ -52,7 +52,13 @@ public class PaymentService : IPaymentService
                         : PaymentType.Other,
                     UserId = payment.UserId,
                     Currency = payment.Currency,
-                    Products = payment.Products,
+                    Products = payment.Products.Select(p=>new Product
+                    {
+                        Name = p.Name,
+
+                        Price = p.Price,
+                        
+                    } ).ToList(),
                     SallerName = payment.SallerName,
                 }
             );
@@ -82,9 +88,16 @@ public class PaymentService : IPaymentService
                 PaymentDate = payment.PaymentDate,
                 Type = payment.Type.ToString(),
                 UserId = payment.UserId,
-
                 Currency = payment.Currency,
+                SallerName = payment.SallerName,
+                Products = payment.Products.Select(p => new Models.Product
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price
+                }).ToList()
             });
+
 
             return result;
         }
