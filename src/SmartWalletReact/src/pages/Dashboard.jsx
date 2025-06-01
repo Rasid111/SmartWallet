@@ -1,14 +1,19 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import "../styles/Dashboard.scss";
 import SpendingsChart from "../components/SpendingsChart";
 import IncomesChart from "../components/IncomesChart";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import AiSuggestions from "../components/AiSuggestions";
+import AiInvestments from "../components/AiInvestments";
+import QRScanner from "../components/QrScanner";
+import AiBestPrice from "../components/AiBestPrice";
 
 export default function Dashboard() {
   const [id, setId] = useState(localStorage.getItem("id"));
   const [paymentsData, SetPaymentsData] = useState([]);
   const [incomesData, SetIncomesData] = useState([]);
+  const [showQrScanner, setShowQrScanner] = useState(false);
   useEffect(() => {
     console.log(1);
     axios
@@ -48,6 +53,21 @@ export default function Dashboard() {
           ) : (
             <IncomesChart>{incomesData}</IncomesChart>
           )}
+        </Col>
+      </Row>
+      {/* <AiSuggestions></AiSuggestions> */}
+      <AiInvestments></AiInvestments>
+      <AiBestPrice></AiBestPrice>
+      <Row className="text-center justify-content-center mt-4">
+        <Col xs={4}>
+          <Button onClick={() => setShowQrScanner(!showQrScanner)}>
+            Scan QR-code
+          </Button>
+        </Col>
+      </Row>
+      <Row hidden={!showQrScanner}>
+        <Col xs={12}>
+          <QRScanner></QRScanner>
         </Col>
       </Row>
     </Container>

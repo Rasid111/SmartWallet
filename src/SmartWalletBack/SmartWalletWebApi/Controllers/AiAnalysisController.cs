@@ -39,4 +39,17 @@ public class AiAnalysisController : ControllerBase
         }
     }
 
+    [HttpGet("bestPrice/{userId}")]
+    public async Task<IActionResult> AnalyzeBestPrice(int userId)
+    {
+        try
+        {
+            var result = await aiService.AnalyzeUserFinanceAsyncBestChoice(userId);
+            return Ok(new { advice = result });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Ошибка анализа: {ex.Message}");
+        }
+    }
 }

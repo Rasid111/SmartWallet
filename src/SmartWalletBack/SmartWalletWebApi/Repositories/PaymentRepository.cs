@@ -26,13 +26,10 @@ public class PaymentRepository : IPaymentRepository
 
     public async Task<IEnumerable<Payment>> AllPaymentsAsync()
     {
-        var payments = await context.Payments
-            .Include(p => p.Products) 
-            .ToListAsync();
+        var payments = await context.Payments.Include(p => p.Products).ToListAsync();
 
         return payments;
     }
-
 
     public async Task<IEnumerable<Payment>> GetPaymentByUserId(int id)
     {
@@ -42,5 +39,11 @@ public class PaymentRepository : IPaymentRepository
     public async Task<Payment?> GetPaymentById(int id)
     {
         return await context.Payments.FirstOrDefaultAsync(f => f.Id == id);
+    }
+
+    public async Task BulkCreate(List<Payment> addPaymentRequest)
+    {
+        context.Payments.AddRange(addPaymentRequest);
+        context.SaveChanges();
     }
 }

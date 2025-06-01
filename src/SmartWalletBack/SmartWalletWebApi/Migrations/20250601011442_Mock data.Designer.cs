@@ -12,8 +12,8 @@ using SmartWalletWebApi.DB;
 namespace SmartWalletWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250531225425_migra")]
-    partial class migra
+    [Migration("20250601011442_Mock data")]
+    partial class Mockdata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

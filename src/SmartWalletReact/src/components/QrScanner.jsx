@@ -106,7 +106,7 @@ const QRScanner = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>Сканер QR-кода</h1>
+      <h1>QR-code scanner</h1>
 
       <div
         style={{
@@ -132,12 +132,12 @@ const QRScanner = () => {
 
       {loading && <p>Отправка данных...</p>}
 
-      {scanResult && (
+      {/* {scanResult && (
         <div style={{ marginTop: "20px" }}>
           <h3>Сканированные данные:</h3>
           <pre>{JSON.stringify(scanResult, null, 2)}</pre>
         </div>
-      )}
+      )} */}
 
       {error && (
         <div style={{ color: "red", marginTop: "20px" }}>

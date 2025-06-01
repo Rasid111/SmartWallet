@@ -93,7 +93,7 @@ const IncomeChart = ({ data }) => {
 
   return (
     <>
-      <h2>Income Chart</h2>
+      <h2 className="text-center">Income Chart</h2>
       <Bar data={chartData} options={options} />
     </>
   );

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dashboard from "./pages/Dashboard";
-import QRScanner from "./pages/QrScanner";
+import QRScanner from "./components/QrScanner";
 
 function App() {
   return (

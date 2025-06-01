@@ -22,6 +22,7 @@ public class PaymentController : ControllerBase
         this.paymentService = paymentService;
         this.serviceAi = serviceAi;
     }
+
     [HttpGet]
     public async Task<IActionResult> GetAllPayments()
     {
@@ -107,4 +108,10 @@ public class PaymentController : ControllerBase
         }
     }
 
+    [HttpPost]
+    public IActionResult BulkInsert(List<AddPaymentRequestDto> dtos)
+    {
+        paymentService.BulkAdd(dtos);
+        return base.Ok();
+    }
 }

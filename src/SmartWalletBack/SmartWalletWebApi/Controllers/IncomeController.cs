@@ -104,13 +104,12 @@ public class IncomeController : ControllerBase
             );
         }
     }
+
+    [HttpPost]
+    public IActionResult BulkInsert(List<AddIncomeRequestDto> dtos)
+    {
+        incomeService.BulkAdd(dtos);
+        return base.Ok();
+    }
 }
 
-
-// public interface IincomeService
-// {
-//     Task<IEnumerable<Income>> AllIncomesAsync();
-//     public Task<IEnumerable<Income>> GetByUserId(int userId);
-//     public Task<Income?> GetByid(int id);
-//     public Task AddIncome(IncomeDto dto);
-// }
