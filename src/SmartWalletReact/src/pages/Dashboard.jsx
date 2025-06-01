@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Accordion, Button, Col, Container, Row } from "react-bootstrap";
 import "../styles/Dashboard.scss";
 import SpendingsChart from "../components/SpendingsChart";
 import IncomesChart from "../components/IncomesChart";
@@ -57,9 +57,27 @@ export default function Dashboard() {
         </Col>
       </Row>
       {/* <AiSuggestions></AiSuggestions> */}
-      <AiInvestments></AiInvestments>
-      <AiBestPrice></AiBestPrice>
-      <AiPrediction></AiPrediction>
+
+      <Accordion>
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>Investments</Accordion.Header>
+          <Accordion.Body>
+            <AiInvestments></AiInvestments>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>BestPrice</Accordion.Header>
+          <Accordion.Body>
+            <AiBestPrice></AiBestPrice>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="2">
+          <Accordion.Header>Forecast</Accordion.Header>
+          <Accordion.Body>
+            <AiPrediction></AiPrediction>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
       <Row className="text-center justify-content-center mt-4">
         <Col xs={4}>
           <Button onClick={() => setShowQrScanner(!showQrScanner)}>

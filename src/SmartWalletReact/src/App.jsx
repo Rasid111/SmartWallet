@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/dashboard" element={<Dashboard></Dashboard>} />
         <Route path="/qrscanner" element={<QRScanner></QRScanner>} />
+        <Route path="/" element={<Dashboard></Dashboard>} />
       </Routes>
     </BrowserRouter>
   );

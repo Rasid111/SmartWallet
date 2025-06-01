@@ -19,6 +19,19 @@ public class AiAnalysisService
         this.openRouter = openRouter;
     }
 
+    public async Task<string> PredictionAsync(int userId)
+    {
+        var incomes = await incomeService.GetByUserId(userId);
+        var payments = await paymentService.GetPaymentByUserId(userId);
+
+        if (!incomes.Any() && !payments.Any())
+            return "Нет данных для анализа.";
+
+        var message =
+            $@"Сейчас ты получишь запрос от пользователя банка. Не комментируй его, дай прямой ответ. Говори во втором лице. На основе данных о доходах и расходах пользователя, дай прогноз его финансового состояния на ближайшее время. Расходы: {JsonSerializer.Serialize(payments)}. Доходы: {JsonSerializer.Serialize(incomes)}.";
+
+        return await openRouter.SendMessage(message);
+    }
     public async Task<string> AnalyzeUserFinanceAsync(int userId)
     {
         //         var incomes = await incomeService.GetByUserId(userId);
@@ -61,7 +74,7 @@ public class AiAnalysisService
         var totalExpenses = payments.Sum(p => p.Amount);
 
         var message =
-            $@"Сейчас ты получишь запрос от пользователя банка. Не комментируй его вопрос, дай прямой ответ. В ответе активно упоминай Pasha Bank. Вот мои траты: {JsonSerializer.Serialize(payments)}, а вот мои доходы: {JsonSerializer.Serialize(incomes)}.
+            $@"Сейчас ты получишь запрос от пользователя банка. Не комментируй его вопрос, дай прямой ответ. В ответе упоминай Pasha Bank. Вот мои траты: {JsonSerializer.Serialize(payments)}, а вот мои доходы: {JsonSerializer.Serialize(incomes)}.
             У меня есть {totalIncome - totalExpenses} свободных средств USD. Как мне ими лучше распорядиться, чтобы получить максимальную прибыль?";
 
         return await openRouter.SendMessage(message);

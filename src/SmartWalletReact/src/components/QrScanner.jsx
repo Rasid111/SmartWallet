@@ -6,6 +6,7 @@ const QRScanner = () => {
   const [scanResult, setScanResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const streamRef = useRef(null);
@@ -49,7 +50,7 @@ const QRScanner = () => {
           // Используем jsQR для декодирования QR-кода
           const code = jsQR(imageData.data, imageData.width, imageData.height);
           if (code) {
-            console.log(code.data);
+            console.log(code);
             try {
               const jsonData = JSON.parse(code.data.trim());
               console.log("Сканированный QR-код:", jsonData);
@@ -95,7 +96,7 @@ const QRScanner = () => {
           },
         }
       );
-
+      setSuccess("Данные успешно отправлены!");
       console.log("Данные успешно отправлены:", response.data);
     } catch (err) {
       setError("Ошибка при отправке данных: " + err.message);
@@ -142,6 +143,11 @@ const QRScanner = () => {
       {error && (
         <div style={{ color: "red", marginTop: "20px" }}>
           <p>{error}</p>
+        </div>
+      )}
+      {success && (
+        <div style={{ color: "green", marginTop: "20px" }}>
+          <p>{success}</p>
         </div>
       )}
     </div>

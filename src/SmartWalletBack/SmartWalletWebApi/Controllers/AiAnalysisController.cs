@@ -11,6 +11,20 @@ public class AiAnalysisController : ControllerBase
         this.aiService = aiService;
     }
 
+    [HttpGet("prediction/{userId}")]
+    public async Task<IActionResult> Prediction(int userId)
+    {
+        try
+        {
+            var result = await aiService.PredictionAsync(userId);
+            return Ok(new { prediction = result });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Ошибка предсказания: {ex.Message}");
+        }
+    }
+    
     [HttpGet("statistics/{userId}")]
     public async Task<IActionResult> Analyze(int userId)
     {
