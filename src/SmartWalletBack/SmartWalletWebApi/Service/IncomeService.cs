@@ -61,19 +61,45 @@ public class IncomeService : IIncomeService
             throw new Exception($"An error occurred while saving the income: {ex.Message}", ex);
         }
     }
-    
-    public async Task<IEnumerable<Income>> AllIncomesAsync()
+
+
+    public async Task<IEnumerable<GetIncomeResponseDto>> AllIncomesAsync()
     {
-        return await incomeRepository.AllIncomesAsync();
+        return (await incomeRepository.AllIncomesAsync()).Select(income => new GetIncomeResponseDto
+        {
+            Id = income.Id,
+            Amount = income.Amount,
+            Type = income.Type.ToString(),
+            UserId = income.UserId,
+            DateReceived = income.DateReceived,
+            Currency = income.Currency
+        });
     }
 
-    public async Task<IEnumerable<Income>> GetByUserId(int id)
+    public async Task<IEnumerable<GetIncomeResponseDto>> GetByUserId(int id)
     {
-        return await incomeRepository.GetByUserId(id);
+        return (await incomeRepository.GetByUserId(id)).Select(income => new GetIncomeResponseDto
+        {
+            Id = income.Id,
+            Amount = income.Amount,
+            Type = income.Type.ToString(),
+            UserId = income.UserId,
+            DateReceived = income.DateReceived,
+            Currency = income.Currency
+        });;
     }
 
-    public async Task<Income?> GetByid(int id)
+    public async Task<GetIncomeResponseDto?> GetByid(int id)
     {
-        return await incomeRepository.GetByid(id);
+        var res = await incomeRepository.GetByid(id);
+        return res == null ? null : new GetIncomeResponseDto
+        {
+            Id = res.Id,
+            Amount = res.Amount,
+            Type = res.Type.ToString(),
+            UserId = res.UserId,
+            DateReceived = res.DateReceived,
+            Currency = res.Currency
+        };
     }
 }
