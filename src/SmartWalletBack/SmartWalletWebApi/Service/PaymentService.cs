@@ -52,16 +52,18 @@ public class PaymentService : IPaymentService
                         : PaymentType.Other,
                     UserId = payment.UserId,
                     Currency = payment.Currency,
-                    Products = payment.Products.Select(p=>new Product
+                    Products = payment.Products.Select(p => new Product
                     {
                         Name = p.Name,
 
                         Price = p.Price,
-                        
-                    } ).ToList(),
+
+                    }).ToList(),
                     SallerName = payment.SallerName,
+
                 }
             );
+
         }
         catch (Exception ex)
         {
