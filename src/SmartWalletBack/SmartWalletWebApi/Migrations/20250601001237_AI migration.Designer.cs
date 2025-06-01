@@ -12,8 +12,8 @@ using SmartWalletWebApi.DB;
 namespace SmartWalletWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250531211712_initial migration")]
-    partial class initialmigration
+    [Migration("20250601001237_AI migration")]
+    partial class AImigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,10 @@ namespace SmartWalletWebApi.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("DateReceived")
                         .HasColumnType("timestamp with time zone");
@@ -58,6 +62,9 @@ namespace SmartWalletWebApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("Currency")
                         .IsRequired()
                         .HasColumnType("text");
@@ -65,11 +72,8 @@ namespace SmartWalletWebApi.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("SellerName")
+                    b.Property<string>("SallerName")
                         .HasColumnType("text");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("numeric");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");

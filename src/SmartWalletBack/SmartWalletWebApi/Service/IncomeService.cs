@@ -62,26 +62,6 @@ public class IncomeService : IIncomeService
         }
     }
 
-    // public async Task<Income> AddIncome(IncomeDto dto)
-    // {
-    //     if (dto == null)
-    //         throw new ArgumentNullException(nameof(dto), "Income object is null.");
-
-    //     if (dto.Amount <= 0)
-    //         throw new ArgumentException("Income amount must be greater than zero.");
-
-    //     var income = new Income
-    //     {
-    //         Amount = dto.Amount,
-    //         Type = dto.Type,
-    //         UserId = dto.UserId,
-    //         DateReceived = DateTime.UtcNow,
-    //     };
-
-    //     await incomeRepository.AddIncome(income);
-
-    //     return income;
-    // }
 
     public async Task<IEnumerable<GetIncomeResponseDto>> AllIncomesAsync()
     {
