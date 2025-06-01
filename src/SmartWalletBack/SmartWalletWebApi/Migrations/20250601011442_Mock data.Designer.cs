@@ -12,8 +12,8 @@ using SmartWalletWebApi.DB;
 namespace SmartWalletWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250601001237_AI migration")]
-    partial class AImigration
+    [Migration("20250601011442_Mock data")]
+    partial class Mockdata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,7 +98,7 @@ namespace SmartWalletWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
@@ -113,9 +113,13 @@ namespace SmartWalletWebApi.Migrations
 
             modelBuilder.Entity("SmartWalletWebApi.Models.Product", b =>
                 {
-                    b.HasOne("SmartWalletWebApi.Models.Payment", null)
+                    b.HasOne("SmartWalletWebApi.Models.Payment", "Payment")
                         .WithMany("Products")
-                        .HasForeignKey("PaymentId");
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("SmartWalletWebApi.Models.Payment", b =>

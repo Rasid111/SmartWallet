@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SmartWalletWebApi.DB;
+using SmartWalletWebApi.Dtos.Income;
 using SmartWalletWebApi.Models;
 using SmartWalletWebApi.Repositories.Base;
 
@@ -39,5 +40,11 @@ public class IncomeRepository : IIncomeRepository
     public async Task<Income?> GetByid(int id)
     {
         return await context.Incomes.FirstOrDefaultAsync(f => f.Id == id);
+    }
+
+    public async Task BulkCreate(List<Income> addIncomeRequest)
+    {
+        context.Incomes.AddRange(addIncomeRequest);
+        context.SaveChanges();
     }
 }
