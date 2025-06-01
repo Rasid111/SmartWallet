@@ -7,6 +7,7 @@ import axios from "axios";
 import AiSuggestions from "../components/AiSuggestions";
 import AiInvestments from "../components/AiInvestments";
 import QRScanner from "../components/QrScanner";
+import AiBestPrice from "../components/AiBestPrice";
 
 export default function Dashboard() {
   const [id, setId] = useState(localStorage.getItem("id"));
@@ -54,8 +55,9 @@ export default function Dashboard() {
           )}
         </Col>
       </Row>
-      <AiSuggestions></AiSuggestions>
+      {/* <AiSuggestions></AiSuggestions> */}
       <AiInvestments></AiInvestments>
+      <AiBestPrice></AiBestPrice>
       <Row className="text-center justify-content-center mt-4">
         <Col xs={4}>
           <Button onClick={() => setShowQrScanner(!showQrScanner)}>
@@ -65,9 +67,7 @@ export default function Dashboard() {
       </Row>
       <Row hidden={!showQrScanner}>
         <Col xs={12}>
-          <QRScanner>
-
-          </QRScanner>
+          <QRScanner></QRScanner>
         </Col>
       </Row>
     </Container>
