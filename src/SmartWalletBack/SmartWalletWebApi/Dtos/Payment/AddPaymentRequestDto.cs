@@ -1,3 +1,4 @@
+using SmartWalletWebApi.Dtos.Product;
 using SmartWalletWebApi.Enums;
 using SmartWalletWebApi.Models;
 
@@ -9,7 +10,7 @@ public class AddPaymentRequestDto
     public required string Type { get; set; }
     public string? SallerName { get; set; }
 
-    public IEnumerable<Product> Products { get; set; }
+    public IEnumerable<ProductCreateRequestDto> Products { get; set; }
 
     public int UserId { get; set; }
     public required string Currency { get; set; }

@@ -26,9 +26,13 @@ public class PaymentRepository : IPaymentRepository
 
     public async Task<IEnumerable<Payment>> AllPaymentsAsync()
     {
-        var payments = await context.Payments.ToListAsync();
+        var payments = await context.Payments
+            .Include(p => p.Products) 
+            .ToListAsync();
+
         return payments;
     }
+
 
     public async Task<IEnumerable<Payment>> GetPaymentByUserId(int id)
     {

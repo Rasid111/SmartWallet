@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartWalletWebApi.DB;
@@ -11,9 +12,11 @@ using SmartWalletWebApi.DB;
 namespace SmartWalletWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250531224533_migr")]
+    partial class migr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,7 +98,7 @@ namespace SmartWalletWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PaymentId")
+                    b.Property<int?>("PaymentId")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
@@ -110,13 +113,9 @@ namespace SmartWalletWebApi.Migrations
 
             modelBuilder.Entity("SmartWalletWebApi.Models.Product", b =>
                 {
-                    b.HasOne("SmartWalletWebApi.Models.Payment", "Payment")
+                    b.HasOne("SmartWalletWebApi.Models.Payment", null)
                         .WithMany("Products")
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Payment");
+                        .HasForeignKey("PaymentId");
                 });
 
             modelBuilder.Entity("SmartWalletWebApi.Models.Payment", b =>
